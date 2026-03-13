@@ -100,7 +100,7 @@ def scrape_course_data(course_id):
             "pre_requisites": "NULL",
             "parallel_courses": "NULL",
             "no_extra_credit_courses": "NULL",
-            "recent_semesters": "NULL"
+            "recent_semesters": "NULL",
             "syllabus": syllabus
         }
 
