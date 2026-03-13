@@ -26,6 +26,17 @@ def get_course_name(soup):
         return "--WEIRD AHH COURSE NAME--"
 
 
+
+def get_general_info_card(soup):
+    card = soup.find("div", id="general_information")
+
+    if not card:
+        print("-- general info card not found!!!!!!")
+        return None
+
+    return card
+    
+
 def scrape_course_data(course_id):
     url = f"https://students.technion.ac.il/local/technionsearch/course/{course_id}?lang=en"
     
