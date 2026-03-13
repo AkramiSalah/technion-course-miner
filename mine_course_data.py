@@ -56,24 +56,23 @@ def handle_course_info_section(h5_tag):
             print("--- Encountered section with no p elemnt!!!")
             print(title)
             print(f"{"-" * 10}")
-        return None
+        return None, None
 
     handlers = {
-        "pre-required": get_prereqs,
-        "parallel": get_anchor_list,
-        "no extra credit": get_anchor_list,
-        
+        "pre-required": ("pre_requisites", get_prereqs),
+        "parallel": ("parallel_courses", get_anchor_list),
+        "no extra credit": ("no_extra_credit_courses", get_anchor_list),
     }
     
-    for keyword, func in handlers.items():
+    for keyword, (json_key, func) in handlers.items():
         if keyword in title:
-            return func(content_p)
+            return json_key, func(content_p)
 
     print("--- Encountered unknown section!!!")
     print(title)
     print(content_p)
     print(f"{"-" * 10}")
-    return None
+    return None, None
             
 
 
