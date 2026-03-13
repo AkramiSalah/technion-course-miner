@@ -35,7 +35,16 @@ def get_general_info_card(soup):
         return None
 
     return card
+
+def get_syllabus_text(general_info_card):
+    syllabus_P = general_info_card.find("p", class_="card-text")
+    if not syllabus_P:
+        print("-- NO SYLLABUS FOUND!!!!")
+        return "NO SYLLABUS FOUND"
     
+    return syllabus_p.get_text(strip=True)
+    
+
 
 def scrape_course_data(course_id):
     url = f"https://students.technion.ac.il/local/technionsearch/course/{course_id}?lang=en"
