@@ -90,16 +90,27 @@ def scrape_course_data(course_id):
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
 
+        gen_info_card = get_general_info_card(soup)
+        course_name = get_course_name(soup)
+        syllabus = get_syllabus_text(gen_info_card)
 
-        return {
+        course_data = {
             "course_id": course_id,
             "course_name": course_name,
-            "pre_requisites": prereq,
-            "parallel_courses": parallel,
-            "no_extra_credit_courses": no_extra_credit,
-            "recent_semesters": recent_semesters,
+            "pre_requisites": "NULL",
+            "parallel_courses": "NULL",
+            "no_extra_credit_courses": "NULL",
+            "recent_semesters": "NULL"
             "syllabus": syllabus
         }
+
+        if gen_info:
+            for h5 in gen_info.find_all("h5"):
+                key, value = handle_course_info_section(h5)
+                if key:
+                    course_data[key] = value
+
+        return course_data
 
     except Exception as e:
         print(f"Failed {course_id}: {e}")
