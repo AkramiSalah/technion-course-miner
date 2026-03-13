@@ -20,10 +20,12 @@ def scrape_course_data(course_id):
 
         return {
             "course_id": course_id,
-            "course_name": "PLACEHOLDER_NAME", 
-            "syllabus": "PLACEHOLDER_SYLLABUS",   
-            "pre_requisite_str": "PREREQ_STR",              
-            "recent_semesters": []             
+            "course_name": course_name,
+            "pre_requisites": prereq,
+            "parallel_courses": parallel,
+            "no_extra_credit_courses": no_extra_credit,
+            "recent_semesters": recent_semesters,
+            "syllabus": syllabus
         }
 
     except Exception as e:
