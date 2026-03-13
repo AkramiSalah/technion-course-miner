@@ -132,14 +132,7 @@ def scrape_course_data(course_id):
         return None
 
 
-def main():
-    try:
-        with open("course_ids.json", 'r') as f:
-            courses = json.load(f)["ids"]
-    except (FileNotFoundError, KeyError) as e:
-        print(f"Error loading course_ids.json: {e}")
-        return
-
+def mine(courses):
     all_course_data = {}
 
     for index, cid in enumerate(courses):
@@ -154,10 +147,4 @@ def main():
         # uniform as to seem like a real user, i dont wanna get banned lol.
         time.sleep(random.uniform(0.5, 1.5))
 
-    with open('technion_courses.json', 'w', encoding='utf-8') as f:
-        json.dump(all_course_data, f, indent=4, ensure_ascii=False)
-
-    print(f"\nScraping complete! Saved {len(all_course_data)} courses to technion_courses.json")
-
-if __name__ == "__main__":
-    main()
+    return all_course_data
