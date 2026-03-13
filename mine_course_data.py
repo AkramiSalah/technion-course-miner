@@ -50,8 +50,12 @@ def get_syllabus_text(general_info_card):
 
 def get_prereqs(content_p):
     return content_p.get_text(" ", strip=True)
+
 def get_anchor_list(content_p):
-    return [a.get('data-course') for a in content_p.find_all("a") if a.get('data-course')]
+    if not content_p:
+        return []
+
+    return [a.get_text(strip=True) for a in content_p.find_all("a")]
 
 def handle_course_info_section(h5_tag):
     title = h5_tag.get_text(strip=True).lower()
@@ -60,7 +64,7 @@ def handle_course_info_section(h5_tag):
             print("--- Encountered section with no p elemnt!!!")
             print(title)
             print(f"{"-" * 10}")
-        return None, None
+            return None, None
 
     handlers = {
         "pre-required": ("pre_requisites", get_prereqs),
@@ -79,7 +83,14 @@ def handle_course_info_section(h5_tag):
     return None, None
             
 
+def get_recent_semesters(soup):
+    semester_card = soup.find("div", id="semester_information")
+    if not semester_card:
+        return []
 
+    tabs = semester_card.find_all("a", class_="nav-link")
+    semesters = [tab.get_text(strip=True) for tab in tabs]
+    return semesters
 
 def scrape_course_data(course_id):
     url = f"https://students.technion.ac.il/local/technionsearch/course/{course_id}?lang=en"
@@ -96,7 +107,8 @@ def scrape_course_data(course_id):
 
         gen_info_card_card = get_general_info_card(soup)
         course_name = get_course_name(soup)
-        syllabus = get_syllabus_text(gen_info_card)
+        syllabus = get_syllabus_text(gen_info_card_card)
+        recent_semesters = get_recent_semesters(soup)
 
         course_data = {
             "course_id": course_id,
@@ -104,12 +116,12 @@ def scrape_course_data(course_id):
             "pre_requisites": "NULL",
             "parallel_courses": "NULL",
             "no_extra_credit_courses": "NULL",
-            "recent_semesters": "NULL",
+            "recent_semesters": recent_semesters,
             "syllabus": syllabus
         }
 
-        if gen_info_card:
-            for h5 in gen_info_card.find_all("h5"):
+        if gen_info_card_card:
+            for h5 in gen_info_card_card.find_all("h5"):
                 key, value = handle_course_info_section(h5)
                 if key:
                     course_data[key] = value
