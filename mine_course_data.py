@@ -4,6 +4,28 @@ import time
 import random
 from bs4 import BeautifulSoup
 
+def get_course_name(soup):
+    course_name_idx = 3
+    raw_title_tag = soup.find('title')
+    if not raw_title_tag:
+        print("-- no title found!!!")
+        return "--NO NAME--"
+    
+    title_text = raw_title_tag.get_text(strip=True)
+
+    # assuming this is the foramt: <title> <course_id> - <course_name> | my.technion</title>
+    try:
+        title_text = title_text.split('|')
+        title_text = title_text[0].split('-', 1)
+        course_name = title_text[1]
+        return course_name.strip()
+    except Exception:
+        print("-- NON EXPECTED COURSE TITLE FORMAT:")
+        print(raw_title_tag)
+        print(f"{'-'*10}")
+        return "--WEIRD AHH COURSE NAME--"
+
+
 def scrape_course_data(course_id):
     url = f"https://students.technion.ac.il/local/technionsearch/course/{course_id}?lang=en"
     
