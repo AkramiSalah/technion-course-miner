@@ -90,7 +90,7 @@ def scrape_course_data(course_id):
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        gen_info_card = get_general_info_card(soup)
+        gen_info_card_card = get_general_info_card(soup)
         course_name = get_course_name(soup)
         syllabus = get_syllabus_text(gen_info_card)
 
@@ -104,8 +104,8 @@ def scrape_course_data(course_id):
             "syllabus": syllabus
         }
 
-        if gen_info:
-            for h5 in gen_info.find_all("h5"):
+        if gen_info_card:
+            for h5 in gen_info_card.find_all("h5"):
                 key, value = handle_course_info_section(h5)
                 if key:
                     course_data[key] = value
