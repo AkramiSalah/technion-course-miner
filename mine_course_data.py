@@ -116,27 +116,33 @@ def scrape_course_data(course_id):
         print(f"Failed {course_id}: {e}")
         return None
 
-courses = []
-with open("course_ids.json" ,'r') as course_ids:
-    courses = json.load(course_ids)["ids"]
 
+def main():
+    try:
+        with open("course_ids.json", 'r') as f:
+            courses = json.load(f)["ids"]
+    except (FileNotFoundError, KeyError) as e:
+        print(f"Error loading course_ids.json: {e}")
+        return
 
-all_course_data = {}
+    all_course_data = {}
 
-for index, cid in enumerate(courses):
-    print(f"Scraping [{index+1}/{len(courses)}]: {cid}")
-    
-    data = scrape_course_data(cid)
-    if data:
-        key = f"{cid} - {data['course_name']}"
-        all_course_data[key] = data
-    
-    # delay to not F up the technion servers, PLEASE! DO! NOT! REMOVE!!!!!!!!
-    # uniform as to seem like a real user, i dont wanna get banned lol.
-    time.sleep(random.uniform(0.5, 1.5))
+    for index, cid in enumerate(courses):
+        print(f"Scraping [{index+1}/{len(courses)}]: {cid}")
+        
+        data = scrape_course_data(cid)
+        if data:
+            key = f"{cid} - {data['course_name']}"
+            all_course_data[key] = data
+        
+        # delay to not F up the technion servers, PLEASE! DO! NOT! REMOVE!!!!!!!!
+        # uniform as to seem like a real user, i dont wanna get banned lol.
+        time.sleep(random.uniform(0.5, 1.5))
 
+    with open('technion_courses.json', 'w', encoding='utf-8') as f:
+        json.dump(all_course_data, f, indent=4, ensure_ascii=False)
 
-with open('technion_courses.json', 'w', encoding='utf-8') as f:
-    json.dump(all_course_data, f, indent=4, ensure_ascii=False)
+    print(f"\nScraping complete! Saved {len(all_course_data)} courses to technion_courses.json")
 
-print("Scraping complete. Data saved to technion_courses.json")
+if __name__ == "__main__":
+    main()
