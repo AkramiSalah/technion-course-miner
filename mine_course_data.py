@@ -37,6 +37,10 @@ def get_general_info_card(soup):
     return card
 
 def get_syllabus_text(general_info_card):
+    if not general_info_card:
+        print("-- general info card is None!!!!!!")
+        return "no general info!!!!!!"
+    
     syllabus_p = general_info_card.find("p", class_="card-text")
     if not syllabus_p:
         print("-- NO SYLLABUS FOUND!!!!")
