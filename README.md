@@ -1,0 +1,1 @@
+# this repo's goal is doing some data mining using python
