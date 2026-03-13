@@ -41,9 +41,41 @@ def get_syllabus_text(general_info_card):
     if not syllabus_P:
         print("-- NO SYLLABUS FOUND!!!!")
         return "NO SYLLABUS FOUND"
-    
+
     return syllabus_p.get_text(strip=True)
+
+def get_prereqs(content_p):
+    return content_p.get_text(" ", strip=True)
+def get_anchor_list(content_p):
+    return [a.get('data-course') for a in content_p.find_all("a") if a.get('data-course')]
+
+def handle_course_info_section(h5_tag):
+    title = h5_tag.get_text(strip=True).lower()
+    content_p = h5_tag.find_next_sibling("p")
+    if not content_p:
+            print("--- Encountered section with no p elemnt!!!")
+            print(title)
+            print(f"{"-" * 10}")
+        return None
+
+    handlers = {
+        "pre-required": get_prereqs,
+        "parallel": get_anchor_list,
+        "no extra credit": get_anchor_list,
+        
+    }
     
+    for keyword, func in handlers.items():
+        if keyword in title:
+            return func(content_p)
+
+    print("--- Encountered unknown section!!!")
+    print(title)
+    print(content_p)
+    print(f"{"-" * 10}")
+    return None
+            
+
 
 
 def scrape_course_data(course_id):
