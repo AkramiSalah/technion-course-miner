@@ -1,8 +1,10 @@
-# This repo's goal is doing some data mining using python
-
+# Technion Data Miner
+This repository focuses on automated data mining of Technion course information using Python.
 
 ## Status: WIP
-This project is currently transitioning from a simple scraper to a CLI utility.
+This project is currently transitioning from a simple BS4 scraper to a CLI utility.
+
+Note: the legacy domain students.technion.ac.il is deprecated. so i am currently refactoring the extraction logic from a BS4-based scraper to a JSON-based API extractor leveraging the new SAP-based student portal. This transition is a big win for data reliability and performance.
 
 ## Recent Major "Update": Architecture Refactor
 The project has been refactored from a standalone script to a modular CLI tool.
@@ -25,7 +27,7 @@ Note: This tool is for educational data mining purposes. Please respect my wishe
 
 # Usage and Depdencies:
 * must have python3.
-* must have bs4.
+* must have bs4. (will soon be deprecated)
 
 to run the script:
 `python3 main.py [COMMAND] [FLAGS]` in the terminal.
