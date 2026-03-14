@@ -1,8 +1,11 @@
-# Technion Data Miner
+# Technion Data Miner V2-DEV
 This repository focuses on automated data mining of Technion course information using Python.
 
-## Status: WIP
+## Status: Architectual pivot
 This project is currently transitioning from a simple BS4 scraper to a CLI utility.
+
+* **v1 (Legacy):** the original HTML scraper is archived in [`/v1-legacy`](./v1-legacy).
+* **v2 (Active):** currently implementing data extraction using the `portalex.technion.ac.il` ODATA API.
 
 Note: the legacy domain students.technion.ac.il is deprecated. so i am currently refactoring the extraction logic from a BS4-based scraper to a JSON-based API extractor leveraging the new SAP-based student portal. This transition is a big win for data reliability and performance.
 
@@ -18,7 +21,7 @@ CLI Interface: Now uses argparse with subcommands (e.g., mine, filter).
 
 
 ## A few notes on legality and ethics:
-* as of right now (2026-03-13) the scraped sites's[ robots.txt](https://students.technion.ac.il/robots.txt) DOES NOT EXIST
+* as of today (2026-03-14) the mined sites's[ robots.txt](`portalex.technion.ac.il/robots.txt) DOES NOT EXIST
 * i have not found anything about usage policy of this site.
 * im not completly sure this is legal, im not a lawer, but after googling and asking gemeni, gpt and claude to be sure, it seems like this is fine
 * with all that being said. my script has a delay between requests of 0.5-1.5 seconds (uniformly distributed) as to not DDOS the site.
@@ -27,10 +30,9 @@ Note: This tool is for educational data mining purposes. Please respect my wishe
 
 # Usage and Depdencies:
 * must have python3.
-* must have bs4. (will soon be deprecated)
 
 to run the script:
-`python3 main.py [COMMAND] [FLAGS]` in the terminal.
+`python3 main.py [COMMAND] [FLAGS] --year [yyyy] --semester [semester_id]` in the terminal.
 
 ## Currently Available Commands:
 
