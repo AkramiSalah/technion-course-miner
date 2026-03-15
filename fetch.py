@@ -15,13 +15,16 @@ a sanitized id has 8 digits.
 
 import requests
 
-base_url = f"https://portalex.technion.ac.il/sap/opu/odata/sap/Z_CM_EV_CDIR_DATA_SRV/"
+def fetch(requested_course):
+        
+    base_url = f"https://portalex.technion.ac.il/sap/opu/odata/sap/Z_CM_EV_CDIR_DATA_SRV/"
 
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-}
+    endpoint_url = f"{base_url}{requested_course}"
+    response = requests.get(endpoint_url, headers=headers, timeout=10)
+    response.raise_for_status()
 
-
-response = requests.get(base_url, headers=headers, timeout=10)
-response.raise_for_status()
+    return response.json()
