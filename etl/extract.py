@@ -1,7 +1,7 @@
 import requests
-from etl.models.course_offering import CourseOffering
+from etl.models.course_query import CourseQuery
 
-def extract_course(requested_course : CourseOffering):
+def extract_course(requested_course : CourseQuery):
         
     base_url = f"https://portalex.technion.ac.il/sap/opu/odata/sap/Z_CM_EV_CDIR_DATA_SRV/"
 
@@ -19,3 +19,5 @@ def extract_course(requested_course : CourseOffering):
     prereq_data = get(f"{entity_url}/SmPrereq?$format=json")
     
     return course_data, prereq_data
+
+

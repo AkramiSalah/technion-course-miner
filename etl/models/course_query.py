@@ -1,4 +1,4 @@
-class CourseOffering:
+class CourseQuery:
     def __init__(self, course_id, course_year, course_period):
         self.course_id     = course_id 
         self.course_year   = course_year 
