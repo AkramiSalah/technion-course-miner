@@ -1,5 +1,5 @@
 import requests
-from models.course_offering import CourseOffering
+from etl.models.course_offering import CourseOffering
 
 def extract_course(requested_course : CourseOffering):
         
@@ -15,9 +15,7 @@ def extract_course(requested_course : CourseOffering):
         return response.json()
 
     entity_url = f"{base_url}{requested_course}"
-    course_data = get(f"{entity_url}?$foramt=json")
-    prereq_data = get(get(f"{entity_url}/SmPrereq?$foramt=json"))
+    course_data = get(f"{entity_url}?$format=json")
+    prereq_data = get(f"{entity_url}/SmPrereq?$format=json")
     
     return course_data, prereq_data
-
-
