@@ -14,7 +14,7 @@ def get_course_id_6(course_data):
     long_format = get_course_id_8(course_data)
     lhs = long_format[1:3]
     rhs = long_format[4:]
-    return lhs.join(rhs)
+    return lhs + rhs
 
 def get_prereq_str(prereq_data):
     results = prereq_data["results"]
@@ -23,7 +23,7 @@ def get_prereq_str(prereq_data):
         return entry["ModuleId"] != "00000000"
     
     def get_course_str(entry):
-        if is_module:
+        if is_module(entry):
             return f"{entry["ModuleName"]}({entry["ModuleShort"]})"
         return ""
     
@@ -31,7 +31,8 @@ def get_prereq_str(prereq_data):
         return f"{entry["Bracket"]}{get_course_str(entry)}{entry["Operator"]}"
     
     prereq_str = ""
-    for entry in prereq_data:
+    for entry in results:
         prereq_str.join(format(entry))
 
     return prereq_str
+
