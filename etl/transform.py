@@ -27,12 +27,12 @@ def get_prereq_str(prereq_data):
             return f"{entry["ModuleName"]}({entry["ModuleShort"]})"
         return ""
     
-    def format(entry):
+    def formatted_entry(entry):
         return f"{entry["Bracket"]}{get_course_str(entry)}{entry["Operator"]}"
     
     prereq_str = ""
     for entry in results:
-        prereq_str.join(format(entry))
+        prereq_str += (formatted_entry(entry))
 
     return prereq_str
 
