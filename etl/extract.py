@@ -26,8 +26,14 @@ def request_query(requested_course : CourseQuery, nav_segment : NavSegment = Non
 def extract_course_general(requested_course : CourseQuery):
     return request_query(requested_course)
 
-def extract_course_prereqs(requested_course : CourseQuery):
+def extract_course_relations(requested_course : CourseQuery):
+    return request_query(requested_course, NavSegment.RELATIONS)
+     
+def extract_course_relations_reverse(requested_course : CourseQuery):
+    return request_query(requested_course, NavSegment.RELATIONS_REVERSE)
+
+def extract_course_period(requested_course : CourseQuery):
+    return request_query(requested_course, NavSegment.PERIOD)
+     
+def extract_course_prereq(requested_course : CourseQuery):
     return request_query(requested_course, NavSegment.PREREQ)
-
-
-
