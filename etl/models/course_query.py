@@ -6,6 +6,9 @@ class CourseQuery:
         self.course_year   = course_year 
         self.course_period = course_period 
     
+    def set_course_id(self, id):
+        self.course_id = valid_id(id) 
+    
     def __str__(self):
         return f"SmObjectSet(Otjid='SM{self.course_id}',Peryr='{self.course_year}',Perid='{self.course_period}',ZzCgOtjid='',ZzPoVersion='',ZzScOtjid='')"
 
