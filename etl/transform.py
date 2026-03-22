@@ -46,5 +46,5 @@ def get_relations(relations_data):
             relations_dict [relationship].append(formatted_course_name)
         else:
             relations_dict [relationship] = [formatted_course_name]
-    return relations_dict 
-
+    
+    return relations_dict
