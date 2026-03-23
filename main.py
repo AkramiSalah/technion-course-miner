@@ -5,6 +5,11 @@ from etl.models import period
 import time, random
 
 
+def save(result_dict, output_path):
+    with open(output_path, 'w') as out:
+        json.dump(result_dict, out, indent=4)
+    print(f"  Saved {len(result_dict)} courses.")
+
 
 def main():
     path_to_raw_input = "data/raw/course_ids.json"
